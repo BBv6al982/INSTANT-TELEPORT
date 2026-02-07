@@ -32,8 +32,17 @@ if not teleportData or teleportData.__alreadyTeleported ~= true then
     return
 end
 
+-------------------------------------------------
+-- WAIT FOR GAME/CHARACTER TO LOAD
+-------------------------------------------------
+local function waitForCharacter()
+    local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart")
+    return char, hrp
+end
 
-wait(4)
+waitForCharacter() -- ensures your character exists before continuing
+wait(1)
 
 -------------------------------------------------
 -- GUI (NO LOAD WAIT)
@@ -77,10 +86,9 @@ wait(1)
 -------------------------------------------------
 -- INFINITE PART SPAM (VERY HEAVY)
 -------------------------------------------------
+local char, hrp = waitForCharacter()
 while true do
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+    local pos = hrp.Position or Vector3.new(0, 5, 0)
 
     for i = 1, 100000 do
         local part = Instance.new("Part")
@@ -93,10 +101,9 @@ while true do
     RunService.Stepped:Wait()
 end
 
+local char, hrp = waitForCharacter()
 while true do
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+    local pos = hrp.Position or Vector3.new(0, 5, 0)
 
     for i = 1, 100000 do
         local part = Instance.new("Part")
@@ -109,10 +116,9 @@ while true do
     RunService.Stepped:Wait()
 end
 
+local char, hrp = waitForCharacter()
 while true do
-    local char = LocalPlayer.Character
-    local hrp = char and char:FindFirstChild("HumanoidRootPart")
-    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+    local pos = hrp.Position or Vector3.new(0, 5, 0)
 
     for i = 1, 100000 do
         local part = Instance.new("Part")
