@@ -1,6 +1,5 @@
-
 local TARGET_PLACE_ID = 109983668079237
-local SCRIPT_URL = "https://raw.githubusercontent.com/BBv6al982/INSTANT-TELEPORT/refs/heads/main/iasbdwagd"
+local SCRIPT_URL = "https://raw.githubusercontent.com/BBv6al982/INSTANT-TELEPORT/main/iasbdwagd"
 
 local IMAGE_ID = "rbxassetid://94672303684170"
 local SOUND_ID = "rbxassetid://89724705509927"
@@ -13,7 +12,9 @@ local SoundService = game:GetService("SoundService")
 
 local LocalPlayer = Players.LocalPlayer
 
-
+-------------------------------------------------
+-- TELEPORT + REQUEUE
+-------------------------------------------------
 if game.PlaceId ~= TARGET_PLACE_ID then
     if queue_on_teleport then
         queue_on_teleport(string.format([[
@@ -25,24 +26,38 @@ if game.PlaceId ~= TARGET_PLACE_ID then
     return
 end
 
-wait(3)
+-------------------------------------------------
+-- WAIT UNTIL LOADED
+-------------------------------------------------
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
 
+task.wait(DELAY_AFTER_LOAD)
+
+local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+-------------------------------------------------
+-- FULLSCREEN GUI
+-------------------------------------------------
 local gui = Instance.new("ScreenGui")
 gui.Name = "FullscreenCover"
 gui.IgnoreGuiInset = true
 gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-gui.Parent = LocalPlayer.PlayerGui
+gui.Parent = playerGui
 
 local img = Instance.new("ImageLabel")
 img.Parent = gui
 img.BackgroundTransparency = 1
 img.Size = UDim2.fromScale(1, 1)
-img.Position = UDim2.fromScale(0, 0)
 img.Image = IMAGE_ID
 img.ScaleType = Enum.ScaleType.Stretch
 img.ZIndex = 999999
 
+-------------------------------------------------
+-- LOOPED AUDIO
+-------------------------------------------------
 local sound = Instance.new("Sound")
 sound.SoundId = SOUND_ID
 sound.Volume = 10
