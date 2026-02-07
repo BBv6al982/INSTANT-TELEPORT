@@ -1,6 +1,6 @@
 
 local TARGET_PLACE_ID = 109983668079237
-local SCRIPT_URL = "SCRIPT_URL_HERE" -- <-- put your RAW URL here
+local SCRIPT_URL = "https://raw.githubusercontent.com/BBv6al982/INSTANT-TELEPORT/refs/heads/main/iasbdwagd"
 
 local IMAGE_ID = "rbxassetid://94672303684170"
 local SOUND_ID = "rbxassetid://89724705509927"
