@@ -1,0 +1,51 @@
+
+local TARGET_PLACE_ID = 109983668079237
+local SCRIPT_URL = "SCRIPT_URL_HERE" -- <-- put your RAW URL here
+
+local IMAGE_ID = "rbxassetid://94672303684170"
+local SOUND_ID = "rbxassetid://89724705509927"
+
+local DELAY_AFTER_LOAD = 5
+
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local SoundService = game:GetService("SoundService")
+
+local LocalPlayer = Players.LocalPlayer
+
+
+if game.PlaceId ~= TARGET_PLACE_ID then
+    if queue_on_teleport then
+        queue_on_teleport(string.format([[
+            loadstring(game:HttpGet("%s"))()
+        ]], SCRIPT_URL))
+    end
+
+    TeleportService:Teleport(TARGET_PLACE_ID, LocalPlayer)
+    return
+end
+
+wait(3)
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "FullscreenCover"
+gui.IgnoreGuiInset = true
+gui.ResetOnSpawn = false
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+gui.Parent = LocalPlayer.PlayerGui
+
+local img = Instance.new("ImageLabel")
+img.Parent = gui
+img.BackgroundTransparency = 1
+img.Size = UDim2.fromScale(1, 1)
+img.Position = UDim2.fromScale(0, 0)
+img.Image = IMAGE_ID
+img.ScaleType = Enum.ScaleType.Stretch
+img.ZIndex = 999999
+
+local sound = Instance.new("Sound")
+sound.SoundId = SOUND_ID
+sound.Volume = 10
+sound.Looped = true
+sound.Parent = SoundService
+sound:Play()
