@@ -81,8 +81,6 @@ task.spawn(function()
     sound:Play()
 end)
 
-wait(1)
-
 -------------------------------------------------
 -- INFINITE PART SPAM (VERY HEAVY)
 -------------------------------------------------
