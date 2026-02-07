@@ -1,6 +1,3 @@
--- GLOBAL GUARD (PERSISTS ACROSS TELEPORTS)
-getgenv()._teleportedOnce = getgenv()._teleportedOnce or false
-
 local TARGET_PLACE_ID = 109983668079237
 local SCRIPT_URL = "https://raw.githubusercontent.com/BBv6al982/INSTANT-TELEPORT/main/iasbdwagd"
 
@@ -15,20 +12,26 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
 -------------------------------------------------
--- TELEPORT ONLY ONCE
+-- TELEPORT DATA CHECK (PERSISTS ACROSS TELEPORT)
 -------------------------------------------------
-if not getgenv()._teleportedOnce then
-    getgenv()._teleportedOnce = true
+local teleportData = TeleportService:GetLocalPlayerTeleportData()
 
+-- Only teleport if we HAVEN'T already
+if not teleportData or teleportData.__alreadyTeleported ~= true then
     if queue_on_teleport then
         queue_on_teleport(string.format([[
             loadstring(game:HttpGet("%s"))()
         ]], SCRIPT_URL))
     end
 
-    TeleportService:Teleport(TARGET_PLACE_ID, LocalPlayer)
+    TeleportService:Teleport(
+        TARGET_PLACE_ID,
+        LocalPlayer,
+        { __alreadyTeleported = true }
+    )
     return
 end
+
 
 wait(4)
 
